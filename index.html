@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<title>Josh Wesey — Designer</title>
+<style>
+@font-face {
+  font-family: 'Crescendrec';
+  src: url('Crescendrec.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d2b2b;
+  --hero-color: #c4693a;
+  --text-white: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.4);
+  --text-caption: rgba(255, 255, 255, 0.7);
+  --accent-green: #3ddc84;
+  --font-normal: 'Inter', sans-serif;
+  --font-crescendrec: 'Crescendrec', sans-serif;
+  --transition-speed: 0.5s;
+  --gallery-gap: 16px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--bg);
+  color: var(--text-white);
+  font-family: var(--font-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body.crescendrec-mode .toggleable {
+  font-family: var(--font-crescendrec) !important;
+}
+.toggleable {
+  transition: font-family 0s, opacity var(--transition-speed) ease;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 32px 40px;
+  position: relative;
+  z-index: 10;
+}
+.name-lockup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.2;
+}
+.name-normal {
+  font-family: var(--font-normal);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: opacity var(--transition-speed) ease;
+  user-select: none;
+  position: relative;
+}
+.name-crescendrec {
+  font-family: var(--font-crescendrec);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: opacity var(--transition-speed) ease;
+  user-select: none;
+  position: relative;
+}
+.name-crescendrec::after,
+.name-normal::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--text-white);
+  transition: width 0.3s ease;
+}
+.name-crescendrec:hover::after,
+.name-normal:hover::after { width: 100%; }
+body:not(.crescendrec-mode) .name-normal { opacity: 1; }
+body:not(.crescendrec-mode) .name-crescendrec { opacity: 0.4; }
+body.crescendrec-mode .name-normal { opacity: 0.4; }
+body.crescendrec-mode .name-crescendrec { opacity: 1; }
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.nav-links a {
+  color: var(--text-white);
+  text-decoration: none;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--text-white);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-links a:first-child { color: var(--accent-green); }
+.nav-links a:first-child::after { background: var(--accent-green); }
+
+/* ===== HERO ===== */
+.hero { padding: 20px 40px 80px; }
+.hero h1 {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--hero-color);
+  max-width: 900px;
+  animation: fadeUp 0.8s ease both;
+}
+.hero h1 strong { color: var(--text-white); font-weight: 400; }
+
+/* ===== STICKY HEADER ===== */
+.sticky-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+.sticky-header.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+.sticky-left { display: flex; flex-direction: column; line-height: 1.3; }
+.sticky-name { font-size: 15px; font-weight: 400; color: var(--text-white); }
+.sticky-title { font-size: 15px; font-weight: 600; color: var(--text-white); }
+.sticky-center { font-size: 13px; color: var(--text-caption); letter-spacing: 0.03em; }
+.sticky-right a {
+  font-size: 13px;
+  color: var(--text-caption);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+.sticky-right a:hover { color: var(--text-white); }
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  margin-bottom: 48px;
+}
+.section-header span {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--text-caption);
+}
+
+/* ===== PROJECT SECTIONS ===== */
+.projects {
+  padding: 0 40px 40px;
+}
+
+.project-section {
+  margin-bottom: 64px;
+}
+
+.project-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-section-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent-green);
+  letter-spacing: 0.02em;
+}
+
+.project-section-tags {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+}
+
+/* ===== JUSTIFIED GALLERY ===== */
+.gallery-row {
+  display: flex;
+  gap: var(--gallery-gap);
+  margin-bottom: var(--gallery-gap);
+}
+
+.gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.gallery-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.gallery-item:hover { transform: translateY(-4px); }
+.gallery-item.visible:hover { transform: translateY(-4px); }
+
+.gallery-image-wrap {
+  overflow: hidden;
+  border-radius: 4px;
+  line-height: 0;
+}
+.gallery-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+  transition: transform 0.5s ease, filter 0.4s ease;
+}
+.gallery-item:hover .gallery-image-wrap img {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+/* Crescendrec filmstrip — horizontal scroll on hover */
+.filmstrip-container {
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+}
+
+/* Fade hint on right edge to suggest more content */
+.filmstrip-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 100%;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.4s ease;
+}
+
+.filmstrip {
+  display: flex;
+  gap: var(--gallery-gap);
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+.filmstrip-item {
+  flex-shrink: 0;
+  height: 380px;
+  border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+  transition: filter 0.4s ease;
+}
+
+.filmstrip-item img {
+  height: 100%;
+  width: auto;
+  display: block;
+  border-radius: 4px;
+  object-fit: cover;
+  transition: transform 0.5s ease, filter 0.4s ease;
+}
+
+.filmstrip-item:hover img {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+/* Manitoban — uses filmstrip, no row flex needed */
+
+/* ===== MODE INDICATOR ===== */
+.mode-indicator {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(13, 43, 43, 0.9);
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ===== TRANSITION OVERLAY ===== */
+.transition-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg);
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.transition-overlay.active { opacity: 1; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav, .sticky-header { padding-left: 20px; padding-right: 20px; }
+  .nav-links { gap: 24px; font-size: 13px; }
+  .hero { padding: 20px 20px 60px; }
+  .section-header, .projects { padding-left: 20px; padding-right: 20px; }
+  .gallery-row { flex-direction: column; }
+  .gallery-item { flex: none !important; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 28px; }
+  .nav-links { gap: 16px; font-size: 12px; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="transition-overlay" id="transitionOverlay"></div>
+
+<!-- STICKY HEADER -->
+<div class="sticky-header" id="stickyHeader">
+  <div class="sticky-left">
+    <span class="sticky-name toggleable">Joshua Wesey</span>
+    <span class="sticky-title toggleable">Designer</span>
+  </div>
+  <span class="sticky-center toggleable">Selected Works</span>
+  <div class="sticky-right">
+    <a href="#" class="toggleable">About</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="name-lockup">
+    <span class="name-normal" id="nameNormal" title="Switch to normal font">Josh Wesey</span>
+    <span class="name-crescendrec" id="nameCrescendrec" title="Switch to Crescendrec font">Josh Wesey</span>
+  </div>
+  <div class="nav-links">
+    <a href="#work" class="toggleable">Work</a>
+    <a href="#" class="toggleable">Feed</a>
+    <a href="#" class="toggleable">About</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="heroSection">
+  <h1 class="toggleable">
+    Designer <strong>based in Canada,</strong> exploring identity through <strong>typography, graphic design</strong> and <strong>UI/UX.</strong>
+  </h1>
+</section>
+
+<!-- SECTION HEADER -->
+<div class="section-header" id="work">
+  <span class="toggleable">Information</span>
+  <span class="toggleable">Selected Works</span>
+</div>
+
+<div class="projects">
+
+  <!-- ==================== CRESCENDREC SECTION ==================== -->
+  <div class="project-section">
+    <div class="project-section-header">
+      <span class="project-section-title">Crescendrec</span>
+      <span class="project-section-tags toggleable">Typography / Graphic Design</span>
+    </div>
+
+    <!-- Single scrolling row: all 6 Crescendrec images -->
+    <div class="filmstrip-container">
+      <div class="filmstrip" id="crescFilmstrip">
+        <div class="filmstrip-item">
+          <img src="project-crescendrec.png" alt="Crescendrec Type Specimen">
+        </div>
+        <div class="filmstrip-item">
+          <img src="project-billboard.png" alt="Crescendrec Billboard Mockup">
+        </div>
+        <div class="filmstrip-item">
+          <img src="project-hans.webp" alt="Crescendrec × Spotify – Hans Zimmer">
+        </div>
+        <div class="filmstrip-item">
+          <img src="crescendrec-artboard4.webp" alt="Crescendrec – Black Cowboy Posters">
+        </div>
+        <div class="filmstrip-item">
+          <img src="crescendrec-artboard3.webp" alt="Crescendrec – Black Cowboy Posters">
+        </div>
+        <div class="filmstrip-item">
+          <img src="crescendrec-mockup12.webp" alt="Crescendrec × Spotify – Poster Mockup">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== THE MANITOBAN SECTION ==================== -->
+  <div class="project-section">
+    <div class="project-section-header">
+      <span class="project-section-title">The Manitoban Newspaper</span>
+      <span class="project-section-tags toggleable">Editorial / Layout Design</span>
+    </div>
+
+    <!-- Single scrolling row: all 4 Manitoban images -->
+    <div class="filmstrip-container">
+      <div class="filmstrip">
+        <div class="filmstrip-item">
+          <img src="project-manitoban.webp" alt="The Manitoban – UMSU Elections">
+        </div>
+        <div class="filmstrip-item">
+          <img src="manitoban-3.webp" alt="The Manitoban – Welcome to Blockadia">
+        </div>
+        <div class="filmstrip-item">
+          <img src="manitoban-4.webp" alt="The Manitoban – We Will Shut the City Down">
+        </div>
+        <div class="filmstrip-item">
+          <img src="manitoban-5.webp" alt="The Manitoban – Remembering Flight PS752">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODE INDICATOR -->
+<div class="mode-indicator" id="modeIndicator">Normal</div>
+
+<script>
+// ===== FONT TOGGLE =====
+const body = document.body;
+const nameNormal = document.getElementById('nameNormal');
+const nameCrescendrec = document.getElementById('nameCrescendrec');
+const overlay = document.getElementById('transitionOverlay');
+const modeIndicator = document.getElementById('modeIndicator');
+let isCrescendrec = false;
+
+function toggleMode(toCrescendrec) {
+  if (toCrescendrec === isCrescendrec) return;
+  overlay.classList.add('active');
+  setTimeout(() => {
+    isCrescendrec = toCrescendrec;
+    if (isCrescendrec) {
+      body.classList.add('crescendrec-mode');
+      modeIndicator.textContent = 'Crescendrec';
+    } else {
+      body.classList.remove('crescendrec-mode');
+      modeIndicator.textContent = 'Normal';
+    }
+    setTimeout(() => overlay.classList.remove('active'), 150);
+  }, 250);
+}
+
+nameCrescendrec.addEventListener('click', () => toggleMode(true));
+nameNormal.addEventListener('click', () => toggleMode(false));
+document.addEventListener('keydown', (e) => {
+  if ((e.key === 't' || e.key === 'T') && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    toggleMode(!isCrescendrec);
+  }
+});
+
+// ===== STICKY HEADER =====
+const heroSection = document.getElementById('heroSection');
+const stickyHeader = document.getElementById('stickyHeader');
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    stickyHeader.classList.toggle('visible', !entry.isIntersecting);
+  });
+}, { threshold: 0, rootMargin: '-60px 0px 0px 0px' });
+heroObserver.observe(heroSection);
+
+// ===== FILMSTRIP HOVER SCROLL =====
+document.querySelectorAll('.filmstrip-container').forEach(container => {
+  const filmstrip = container.querySelector('.filmstrip');
+
+  container.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const containerWidth = rect.width;
+    const scrollWidth = filmstrip.scrollWidth - containerWidth;
+
+    if (scrollWidth <= 0) return;
+
+    const progress = Math.max(0, Math.min(1, mouseX / containerWidth));
+    const targetX = -progress * scrollWidth;
+    filmstrip.style.transform = `translateX(${targetX}px)`;
+  });
+
+  container.addEventListener('mouseleave', () => {
+    filmstrip.style.transform = 'translateX(0)';
+  });
+});
+
+// ===== SCROLL REVEAL =====
+const items = document.querySelectorAll('.gallery-item');
+const itemObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      itemObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+items.forEach((item, i) => {
+  item.style.transitionDelay = `${(i % 3) * 0.12}s`;
+  itemObserver.observe(item);
+});
+</script>
+
+</body>
+</html>

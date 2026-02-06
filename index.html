@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+<title>Josh Wesey — Designer</title>
+<style>
+@font-face {
+  font-family: 'Crescendrec';
+  src: url('Crescendrec.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #0d2b2b;
+  --hero-color: #c4693a;
+  --text-white: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.4);
+  --text-caption: rgba(255, 255, 255, 0.7);
+  --accent-green: #3ddc84;
+  --font-normal: 'Inter', sans-serif;
+  --font-crescendrec: 'Crescendrec', sans-serif;
+  --transition-speed: 0.5s;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-white);
+  font-family: var(--font-normal);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Font mode toggle classes */
+body.crescendrec-mode .toggleable {
+  font-family: var(--font-crescendrec) !important;
+}
+
+.toggleable {
+  transition: font-family 0s, opacity var(--transition-speed) ease;
+}
+
+/* ===== NAV ===== */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 32px 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.name-lockup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.2;
+}
+
+.name-normal {
+  font-family: var(--font-normal);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: opacity var(--transition-speed) ease;
+  user-select: none;
+}
+
+.name-crescendrec {
+  font-family: var(--font-crescendrec);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-white);
+  cursor: pointer;
+  transition: opacity var(--transition-speed) ease;
+  user-select: none;
+  position: relative;
+}
+
+.name-crescendrec::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text-white);
+  transition: width 0.3s ease;
+}
+
+.name-crescendrec:hover::after,
+.name-normal:hover::after {
+  width: 100%;
+}
+
+.name-normal::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text-white);
+  transition: width 0.3s ease;
+}
+
+.name-normal {
+  position: relative;
+}
+
+/* Active states */
+body:not(.crescendrec-mode) .name-normal {
+  opacity: 1;
+}
+body:not(.crescendrec-mode) .name-crescendrec {
+  opacity: 0.4;
+}
+body.crescendrec-mode .name-normal {
+  opacity: 0.4;
+}
+body.crescendrec-mode .name-crescendrec {
+  opacity: 1;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a {
+  color: var(--text-white);
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--text-white);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-links a:first-child {
+  color: var(--accent-green);
+}
+
+.nav-links a:first-child::after {
+  background: var(--accent-green);
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 20px 40px 80px;
+}
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 72px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--hero-color);
+  max-width: 900px;
+}
+
+.hero h1 strong {
+  color: var(--text-white);
+  font-weight: 400;
+}
+
+/* ===== SECTION HEADER ===== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  margin-bottom: 40px;
+}
+
+.section-header span {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--text-caption);
+}
+
+/* ===== PROJECT GRID ===== */
+.projects {
+  padding: 0 40px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+.project-image {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background-size: cover;
+  background-position: center;
+  background-color: #1a3d3d;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: filter 0.4s ease;
+}
+
+/* Project image hover */
+.project-card:hover .project-image {
+  filter: brightness(1.05);
+}
+
+.project-caption {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-caption);
+  letter-spacing: 0.02em;
+}
+
+.project-caption .project-title {
+  color: var(--accent-green);
+  font-weight: 500;
+}
+
+.project-caption .project-tags {
+  color: var(--text-dim);
+  margin-left: 4px;
+}
+
+.project-caption .project-bars {
+  color: var(--accent-green);
+  font-family: var(--font-crescendrec);
+  letter-spacing: 0.1em;
+  margin-left: 4px;
+}
+
+/* ===== MODE INDICATOR ===== */
+.mode-indicator {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  background: rgba(13, 43, 43, 0.9);
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: opacity var(--transition-speed) ease;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ===== TRANSITION OVERLAY ===== */
+.transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg);
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.transition-overlay.active {
+  opacity: 1;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav {
+    padding: 24px 20px;
+  }
+
+  .nav-links {
+    gap: 24px;
+    font-size: 13px;
+  }
+
+  .hero {
+    padding: 20px 20px 60px;
+  }
+
+  .section-header {
+    padding: 0 20px;
+  }
+
+  .projects {
+    padding: 0 20px 60px;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .nav-links {
+    gap: 16px;
+    font-size: 12px;
+  }
+}
+
+/* ===== FADE IN ANIMATION ===== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero h1 {
+  animation: fadeUp 0.8s ease both;
+}
+
+.project-card:nth-child(1) { animation: fadeUp 0.8s ease 0.1s both; }
+.project-card:nth-child(2) { animation: fadeUp 0.8s ease 0.2s both; }
+.project-card:nth-child(3) { animation: fadeUp 0.8s ease 0.3s both; }
+.project-card:nth-child(4) { animation: fadeUp 0.8s ease 0.4s both; }
+</style>
+</head>
+<body>
+
+<div class="transition-overlay" id="transitionOverlay"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="name-lockup">
+    <span class="name-normal" id="nameNormal" title="Switch to normal font">Josh Wesey</span>
+    <span class="name-crescendrec" id="nameCrescendrec" title="Switch to Crescendrec font">Josh Wesey</span>
+  </div>
+  <div class="nav-links">
+    <a href="#work" class="toggleable">Work</a>
+    <a href="#" class="toggleable">Feed</a>
+    <a href="#" class="toggleable">About</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <h1 class="toggleable">
+    Designer <strong>based in Canada,</strong> exploring identity through <strong>typography, graphic design</strong> and <strong>UI/UX.</strong>
+  </h1>
+</section>
+
+<!-- SECTION HEADER -->
+<div class="section-header" id="work">
+  <span class="toggleable">Information</span>
+  <span class="toggleable">Selected Works</span>
+</div>
+
+<!-- PROJECT GRID -->
+<div class="projects">
+  <div class="project-card">
+    <div class="project-image" style="background-image: url('project-crescendrec.png');"></div>
+    <div class="project-caption">
+      <span class="project-title">Crescendrec:</span>
+      <span class="project-tags toggleable">Typography / Graphic Design</span>
+      <span class="project-bars">///////////////</span>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-image" style="background-image: url('project-manitoban.webp');"></div>
+    <div class="project-caption">
+      <span class="project-title">The Manitoban Newspaper</span>
+      <span class="project-tags toggleable">| Typography / Graphic Design</span>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-image" style="background-image: url('project-billboard.png');"></div>
+    <div class="project-caption">
+      <span class="project-title">Crescendrec:</span>
+      <span class="project-tags toggleable">Typography / Graphic Design</span>
+      <span class="project-bars">///////////////</span>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-image" style="background-image: url('project-hans.webp');"></div>
+    <div class="project-caption">
+      <span class="project-title">Crescendrec:</span>
+      <span class="project-tags toggleable">Typography / Graphic Design</span>
+      <span class="project-bars">///////////////</span>
+    </div>
+  </div>
+</div>
+
+<!-- MODE INDICATOR -->
+<div class="mode-indicator" id="modeIndicator">Normal</div>
+
+<script>
+const body = document.body;
+const nameNormal = document.getElementById('nameNormal');
+const nameCrescendrec = document.getElementById('nameCrescendrec');
+const overlay = document.getElementById('transitionOverlay');
+const modeIndicator = document.getElementById('modeIndicator');
+
+let isCrescendrec = false;
+
+function toggleMode(toCrescendrec) {
+  if (toCrescendrec === isCrescendrec) return;
+  
+  // Flash transition
+  overlay.classList.add('active');
+  
+  setTimeout(() => {
+    isCrescendrec = toCrescendrec;
+    
+    if (isCrescendrec) {
+      body.classList.add('crescendrec-mode');
+      modeIndicator.textContent = 'Crescendrec';
+    } else {
+      body.classList.remove('crescendrec-mode');
+      modeIndicator.textContent = 'Normal';
+    }
+    
+    setTimeout(() => {
+      overlay.classList.remove('active');
+    }, 150);
+  }, 250);
+}
+
+// Click handlers
+nameCrescendrec.addEventListener('click', () => toggleMode(true));
+nameNormal.addEventListener('click', () => toggleMode(false));
+
+// Keyboard shortcut: press 'T' to toggle
+document.addEventListener('keydown', (e) => {
+  if (e.key === 't' || e.key === 'T') {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    toggleMode(!isCrescendrec);
+  }
+});
+</script>
+
+</body>
+</html>
